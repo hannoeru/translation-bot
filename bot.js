@@ -44,6 +44,11 @@ bot.on('text', async (ctx) => {
   } else if (lang === 'vi') {
     result = await translateText(ctx.message.text, 'zh-TW');
     ctx.reply(result);
+  } else if (lang === 'ja') {
+    const tw = await translateText(ctx.message.text, 'vi');
+    const vi = await translateText(ctx.message.text, 'zh-TW');
+    result = tw + '\n' + vi;
+    ctx.reply(result);
   }
 });
 
