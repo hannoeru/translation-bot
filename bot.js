@@ -8,7 +8,6 @@ const translate = new Translate();
 async function translateText(text, target) {
   let [translations] = await translate.translate(text, target);
   translations = Array.isArray(translations) ? translations : [translations];
-  console.log('Translations:');
   return translations[0];
 }
 
@@ -22,14 +21,8 @@ async function translateText(text, target) {
 // of multiple texts.
 async function detectLanguage(text) {
   let [detections] = await translate.detect(text);
-  let lang;
   detections = Array.isArray(detections) ? detections : [detections];
-  console.log('Detections:');
-  detections.forEach((detection) => {
-    console.log(`${detection.input} => ${detection.language}`);
-    lang = detection.language;
-  });
-  return lang;
+  return detections[0].language;
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -40,15 +33,18 @@ bot.start((ctx) => ctx.reply('Welcome'));
 
 // bot.help((ctx) => ctx.reply('Send me a sticker'));
 
+// bot.use(Telegraf.log());
+
 bot.on('text', async (ctx) => {
   const lang = await detectLanguage(ctx.message.text);
   let result;
   if (lang === 'zh-TW' || lang === 'zh-CN') {
     result = await translateText(ctx.message.text, 'vi');
+    ctx.reply(result);
   } else if (lang === 'vi') {
     result = await translateText(ctx.message.text, 'zh-TW');
+    ctx.reply(result);
   }
-  ctx.reply(result);
 });
 
 bot.catch((err, ctx) => {
