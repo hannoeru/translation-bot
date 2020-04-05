@@ -1,28 +1,48 @@
 const Telegraf = require('telegraf');
 require('dotenv').config();
 // Imports the Google Cloud client library
-const { Translate } = require('@google-cloud/translate').v2;
+const { TranslationServiceClient } = require('@google-cloud/translate');
 // Creates a client
-const translate = new Translate();
+const translationClient = new TranslationServiceClient();
+// Set env
+const projectId = 'home-1525861264363';
+const location = 'global';
 
 async function translateText(text, target) {
-  let [translations] = await translate.translate(text, target);
-  translations = Array.isArray(translations) ? translations : [translations];
-  return translations[0];
+  // Construct request
+  const request = {
+    parent: `projects/${projectId}/locations/${location}`,
+    contents: [text],
+    mimeType: 'text/plain',
+    targetLanguageCode: target,
+    model: `projects/${projectId}/locations/${location}/models/general/nmt`,
+  };
+
+  try {
+    // Run request
+    const [response] = await translationClient.translateText(request);
+
+    return response.translations[0].translatedText;
+  } catch (error) {
+    console.error(error.details);
+  }
 }
 
-/**
- * TODO(developer): Uncomment the following line before running the sample.
- */
-// const text = 'The text for which to detect language, e.g. Hello, world!';
-
-// Detects the language. "text" can be a string for detecting the language of
-// a single piece of text, or an array of strings for detecting the languages
-// of multiple texts.
 async function detectLanguage(text) {
-  let [detections] = await translate.detect(text);
-  detections = Array.isArray(detections) ? detections : [detections];
-  return detections[0].language;
+  // Construct request
+  const request = {
+    parent: `projects/${projectId}/locations/${location}`,
+    content: text,
+  };
+
+  try {
+    // Run request
+    const [response] = await translationClient.detectLanguage(request);
+
+    return response.languages[0].languageCode;
+  } catch (error) {
+    console.error(error.details);
+  }
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
