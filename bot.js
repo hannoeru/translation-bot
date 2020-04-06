@@ -15,11 +15,12 @@ bot.start((ctx) => ctx.reply('Welcome'));
 let select = gcp;
 
 bot.command('use', (ctx) => {
-  if (ctx.message.text === 'ms') {
+  const text = ctx.message.text.split(' ')[1];
+  if (text === 'ms') {
     select = ms;
     ctx.reply('已更改為：MS');
   }
-  if (ctx.message.text === 'gcp') {
+  if (text === 'gcp') {
     select = gcp;
     ctx.reply('已更改為：GCP');
   }
