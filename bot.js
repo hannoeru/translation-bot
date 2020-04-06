@@ -59,14 +59,18 @@ bot.on('text', async (ctx) => {
   const lang = await detectLanguage(ctx.message.text);
   let result;
   if (lang === 'zh-TW' || lang === 'zh-CN') {
-    result = await translateText(ctx.message.text, 'vi');
+    const ja = await translateText(ctx.message.text, 'ja');
+    const vi = await translateText(ctx.message.text, 'vi');
+    result = vi + '\n' + ja;
     ctx.reply(result);
   } else if (lang === 'vi') {
-    result = await translateText(ctx.message.text, 'zh-TW');
+    const ja = await translateText(ctx.message.text, 'ja');
+    const tw = await translateText(ctx.message.text, 'zh-TW');
+    result = tw + '\n' + ja;
     ctx.reply(result);
   } else if (lang === 'ja') {
-    const tw = await translateText(ctx.message.text, 'vi');
-    const vi = await translateText(ctx.message.text, 'zh-TW');
+    const vi = await translateText(ctx.message.text, 'vi');
+    const tw = await translateText(ctx.message.text, 'zh-TW');
     result = tw + '\n' + vi;
     ctx.reply(result);
   }
