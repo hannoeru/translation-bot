@@ -12,7 +12,18 @@ bot.start((ctx) => ctx.reply('Welcome'));
 // bot.help((ctx) => ctx.reply('Send me a sticker'));
 
 // bot.use(Telegraf.log());
-const select = gcp;
+let select = gcp;
+
+bot.command('use', (ctx) => {
+  if (ctx.message.text === 'ms') {
+    select = ms;
+    ctx.reply('已更改為：MS');
+  }
+  if (ctx.message.text === 'gcp') {
+    select = gcp;
+    ctx.reply('已更改為：GCP');
+  }
+});
 
 bot.on('text', async (ctx) => {
   const lang = await select.detectLanguage(ctx.message.text);
