@@ -12,11 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/translate": "^5.3.0",
-    "dotenv": "^8.2.0",
-    "nodemon": "^2.0.2",
+    "dotenv": "^8.6.0",
+    "nodemon": "^2.0.15",
     "request": "^2.88.2",
-    "request-promise": "^4.2.5",
-    "telegraf": "^3.37.0",
+    "request-promise": "^4.2.6",
+    "telegraf": "^3.39.0",
     "uuid": "^7.0.3"
   }
 }
