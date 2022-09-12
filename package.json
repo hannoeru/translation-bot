@@ -11,7 +11,7 @@
   "author": "hanlee",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/translate": "^7.0.1",
+    "@google-cloud/translate": "^7.0.2",
     "dotenv": "^16.0.2",
     "nodemon": "^2.0.19",
     "request": "^2.88.2",
