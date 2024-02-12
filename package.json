@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/translate": "^8.0.3",
-    "dotenv": "^16.4.1",
+    "dotenv": "^16.4.2",
     "nodemon": "^3.0.3",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
